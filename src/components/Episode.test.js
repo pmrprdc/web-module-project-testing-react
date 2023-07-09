@@ -6,33 +6,35 @@ import '@testing-library/jest-dom';
 
 
 const fakeData = {
-    "id": 1576472,
-    "url": "https://www.tvmaze.com/episodes/1576472/stranger-things-3x04-chapter-four-the-sauna-test",
-    "name": "Chapter Four: The Sauna Test",
-    "season": 3,
-    "number": 4,
-    "type": "regular",
-    "airdate": "2019-07-04",
-    "airtime": "",
-    "airstamp": "2019-07-04T12:00:00+00:00",
-    "runtime": 53,
-    "rating": {
+  "id": 553946,
+  "url": "https://www.tvmaze.com/episodes/553946/stranger-things-1x01-chapter-one-the-vanishing-of-will-byers",
+  "name": "Chapter One: The Vanishing of Will Byers",
+  "season": 1,
+  "number": 1,
+  "type": "regular",
+  "airdate": "2016-07-15",
+  "airtime": "",
+  "airstamp": "2016-07-15T12:00:00+00:00",
+  "runtime": 49,
+  "rating": {
       "average": 7.9
-    },
-    "image": "https://static.tvmaze.com/uploads/images/medium_landscape/399/998477.jpg",
-    "summary": "Mike, Lucas, and Will recruit El and Max to help them learn who the Mind Flayer's host is. Robin, Steve, and Dustin recruit someone to sneak into Lynx, and Nancy and Jonathan are fired.",
-    "_links": {
+  },
+  "image": "https://static.tvmaze.com/uploads/images/medium_landscape/342/855786.jpg",
+  "summary": "A young boy mysteriously disappears, and his panicked mother demands that the police find him. Meanwhile, the boy's friends conduct their own search, and meet a mysterious girl in the forest.",
+  "_links": {
       "self": {
-        "href": "https://api.tvmaze.com/episodes/1576472"
+          "href": "https://api.tvmaze.com/episodes/553946"
       },
       "show": {
-        "href": "https://api.tvmaze.com/shows/2993"
+          "href": "https://api.tvmaze.com/shows/2993"
       }
-    }
   }
+}
 
 test('renders without errors', () => {
-  render(<Episode episode={fakeData}  />)
+  render(<Episode episode={{...fakeData}}  />)
+  const value = screen.queryByText(/Chapter One: The Vanishing of Will Byers/gi)
+  expect(value).toBeInTheDocument()
 });
 
 
@@ -57,3 +59,6 @@ test('summary value passed in to the Episode component displays as expected', ()
        expect(value.src).toContain("https://i.ibb.co/2FsfXqM/stranger-things.png")
 
   })
+
+
+  

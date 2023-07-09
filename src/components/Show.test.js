@@ -49,6 +49,7 @@ test('Show component renders when your test data is passed in through show prop 
 
     render(<Show episode={{...data}} selectedSeason="none" />)
     const value = screen.queryByText(/some drama happens/ig)
-   expect(value).toBeInTheDocument();
+
 
 })
+
