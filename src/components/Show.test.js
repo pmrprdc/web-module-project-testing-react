@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { fireEvent } from '@testing-library/react';
 import Show from './Show';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
 
 
 const data = {
