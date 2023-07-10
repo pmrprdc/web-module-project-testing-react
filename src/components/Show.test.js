@@ -1,16 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import Show from './Show';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 
 const data = {
-  "name": "Stranger Things",
-  "image": {
-    "medium": "https://static.tvmaze.com/uploads/images/medium_portrait/396/991288.jpg",
-    "original": "https://static.tvmaze.com/uploads/images/original_untouched/396/991288.jpg"
-  },
-  "summary": "Some drama happens",
+  "name": "Test Show",
+  "summary": "Test Summary",
   "seasons": [
     {
       "id": 0,
@@ -21,35 +19,45 @@ const data = {
       "id": 1,
       "name": "Season 2",
       "episodes": []
-    },
-    {
-      "id": 2,
-      "name": "Season 3",
-      "episodes": [
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Season 4",
-      "episodes": []
-   
-    },
-
-    {
-      "id": 4,
-      "name": "Season 5",
-      "episodes": []
     }
+    
   ]
 }
 
 
 
-test('Show component renders when your test data is passed in through show prop and "none" is passed in through selectedSeason prop.', ()=>{
+test('Show component renders when your test data is passed in through show prop and "none" is passed in through selectedSeason prop.', () => {
 
-    render(<Show episode={{...data}} selectedSeason="none" />)
-    const value = screen.queryByText(/some drama happens/ig)
-
+    render(<Show show={data} selectedSeason={"none"} />);
+   
 
 })
 
+
+
+test('Renders loading container when show is null', () => {
+
+    render(<Show show={null}  />);
+    const loading = screen.queryByTestId('loading-container');
+    expect(loading).toBeInTheDocument();
+
+})
+
+
+test('Renders same number of options as passed in', () => {
+    
+    render(<Show show={data} selectedSeason={"none"}  />);
+    const seasonOptions = screen.queryAllByTestId('season-option');
+    expect(seasonOptions).toHaveLength(2)
+
+})
+
+
+test('handleSelect is called when a season is selected', () => {
+    const handleSelect = jest.fn(event => event.target.value); // handleSelect now handles an event
+    render(<Show show={data} selectedSeason={"none"} handleSelect={handleSelect} />);
+    const select = screen.getByLabelText(/select a season/i)
+    fireEvent.change(select, { target: { value: '0' } });
+    expect(handleSelect).toBeCalled()
+   
+});
