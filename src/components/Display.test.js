@@ -52,7 +52,7 @@ test("when the fetch button is pressed, the amount of select options rendered is
     userEvent.click(button)
     
     await waitFor(()=>{
-        const seasonOptions = screen.findAllByTestId('season-option')
+        const seasonOptions = screen.queryAllByTestId('season-option')
         expect(seasonOptions).toHaveLength(2)
     })
     
@@ -62,7 +62,36 @@ test("when the fetch button is pressed, the amount of select options rendered is
 
 
 
+test(" functional prop displayFunc runs on fetch button press", async()=>{
+    mockFetchShow.mockResolvedValueOnce(data)
+    render(<Display />)
+    const button = screen.getByRole('button');
+    userEvent.click(button)
+    
+    await waitFor(()=>{
+        const seasonOptions = screen.queryAllByTestId('season-option')
+        expect(seasonOptions).toHaveLength(2)
+    })
+    
+    
 
+})
+
+
+test(" displayFunc runs when passed as prop", async()=>{
+    mockFetchShow.mockResolvedValueOnce(data)
+    const displayFunc = jest.fn()
+    render(<Display displayFunc={displayFunc} />)
+    const button = screen.getByRole('button');
+    userEvent.click(button)
+    
+    await waitFor(()=>{
+       expect(displayFunc).toHaveBeenCalled();
+    })
+    
+    
+
+})
 
 
 
