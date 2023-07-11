@@ -9,7 +9,7 @@ const Display = (props) => {
   const [show, setShow] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState("none");
   const { displayFunc } = props;
-
+  console.log(show)
   const handleClick = () => {
     fetchShow().then(data => {
       setShow(data);
